@@ -15,7 +15,6 @@ export default function GoogleAuthPage() {
       await signInWithPopup(auth, new GoogleAuthProvider());
       navigate('/');
     } catch (err) {
-      console.error(err);
       setError('Denied');
     } finally {
       setAuthing(false);
