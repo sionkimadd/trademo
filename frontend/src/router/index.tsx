@@ -3,6 +3,7 @@ import GoogleLogin from '../pages/GoogleLogin'
 import AuthRoute from '../guards/AuthRoute'
 import Home from '../pages/Home'
 import Layout from '../components/Layout'
+import RankingBoard from '../pages/RankingBoard'
 
 export default function Router() {
     return (
@@ -13,6 +14,13 @@ export default function Router() {
                     <AuthRoute>
                         <Layout>
                             <Home />
+                        </Layout>
+                    </AuthRoute>
+                } />
+                <Route path="/ranking" element={
+                    <AuthRoute>
+                        <Layout>
+                            <RankingBoard />
                         </Layout>
                     </AuthRoute>
                 } />

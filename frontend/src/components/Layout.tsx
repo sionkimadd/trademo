@@ -66,7 +66,8 @@ export default function Layout({ children }: LayoutProps) {
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content bg-[#21283b] rounded-box z-50 mt-3 w-52 p-2 shadow text-gray-200">
                             <li><span className="justify-between">{displayName}</span></li>
-                            <li><a href="/" data-discover="true">Dashboard</a></li>
+                            <li><a href="/" data-discover="true">Home</a></li>
+                            <li><a href="/ranking" data-discover="true">Ranking</a></li>
                             <li className="divider my-1 before:bg-gray-700 after:bg-gray-700"></li>
                             <li><a className="text-red-400" onClick={handleLogout}>Logout</a></li>
                         </ul>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
+import { setDoc, doc } from 'firebase/firestore';
 
 export default function GoogleAuthPage() {
   const [authing, setAuthing] = useState(false);
@@ -12,7 +13,15 @@ export default function GoogleAuthPage() {
     setAuthing(true);
     setError('');
     try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
+      const result = await signInWithPopup(auth, new GoogleAuthProvider());
+      const user = result.user;
+
+      await setDoc(
+        doc(db, 'users', user.uid),
+        { displayName: user.displayName || 'unknown' },
+        { merge: true }
+      );
+
       navigate('/');
     } catch (err) {
       setError('Denied');
