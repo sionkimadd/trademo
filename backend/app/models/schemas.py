@@ -11,6 +11,9 @@ class StockData(BaseModel):
 class Portfolio(BaseModel):
     cash: float = 100000.0
     stocks: Dict[str, Dict[str, Any]] = {}
+    total_profit_loss: float = 0.0
+    roi: float = 0.0
+    last_updated: str = ""
     
 class Order(BaseModel):
     symbol: str

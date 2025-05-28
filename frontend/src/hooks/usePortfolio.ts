@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { getAuth } from 'firebase/auth';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { API_PATHS, API_BASE_URL } from '../types/api';
 import { scheduleMinuteInterval } from '../utils/scheduleUtils';
@@ -14,6 +14,8 @@ interface StockInPortfolio {
 export interface Portfolio {
     cash: number;
     stocks: Record<string, StockInPortfolio>;
+    total_profit_loss?: number;
+    roi?: number;
 }
 
 interface MarketStockData {
@@ -231,6 +233,26 @@ export function usePortfolio() {
             roi
         };
     }, [portfolio, detailedStocks, calculatePrincipal, calculateTotalAccountBalance]);
+
+    useEffect(() => {
+        if (
+            auth.currentUser &&
+            portfolio &&
+            (
+                Math.abs(portfolioMarketStats.totalProfitLoss - (portfolio.total_profit_loss || 0)) > 0.01 ||
+                Math.abs(portfolioMarketStats.roi - (portfolio.roi || 0)) > 0.01
+            )
+        ) {
+            const portfolioRef = doc(db, "users", auth.currentUser.uid, "portfolio", "main");
+            updateDoc(portfolioRef, {
+                total_profit_loss: portfolioMarketStats.totalProfitLoss,
+                roi: portfolioMarketStats.roi,
+                last_updated: new Date().toISOString()
+            }).catch(() => {
+                console.error("Error updating P&L in Firebase");
+            });
+        }
+    }, [portfolioMarketStats.totalProfitLoss, portfolioMarketStats.roi, auth.currentUser, portfolio]);
 
     return { 
         portfolio, 
