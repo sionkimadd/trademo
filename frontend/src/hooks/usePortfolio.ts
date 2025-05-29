@@ -212,7 +212,7 @@ export function usePortfolio() {
                 profit_loss,
                 roi,
             };
-        });
+        }).sort((a, b) => (b.quantity * b.avg_price) - (a.quantity * a.avg_price));
     }, [portfolio, currentStockPrices]);
 
     const portfolioMarketStats = useMemo(() => {
