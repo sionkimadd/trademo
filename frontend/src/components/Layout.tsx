@@ -75,7 +75,7 @@ export default function Layout({ children }: LayoutProps) {
                 </div>
             </div>
 
-            <main className="flex-1 overflow-hidden bg-[#1a1f2e] p-0">
+            <main className="flex-1 overflow-y-auto bg-[#12141e] p-0">
                 <div className="h-full w-full px-0">
                     {children}
                 </div>

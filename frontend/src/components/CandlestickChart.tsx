@@ -49,8 +49,8 @@ export default function CandlestickChart({
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="flex justify-between items-center mb-2">
-        <div className="flex space-x-1">
+      <div className="flex flex-wrap justify-between items-start gap-2 mb-2">
+        <div className="flex flex-wrap gap-1">
           {TIMEFRAME_OPTIONS.map(({ tf, label }) => (
             <TimeframeButton
               key={tf}
@@ -78,7 +78,7 @@ export default function CandlestickChart({
       </div>
       
       {loading && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+        <div className="absolute inset-0 flex items-center justify-center bg-[#232939] bg-opacity-50 z-10">
           <div className="flex flex-col items-center">
             <span className="loading loading-spinner loading-md text-[#4db6ac]"></span>
             <p className="text-sm text-gray-300 mt-2">Loading chart data...</p>
@@ -87,19 +87,21 @@ export default function CandlestickChart({
       )}
       
       {error && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#e75f77] bg-opacity-20 rounded-lg p-3 max-w-xs text-center z-10">
-          <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 text-[#e75f77] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p className="text-white text-sm font-medium">{error}</p>
-          <p className="text-gray-200 text-xs mt-1">Unable to connect to API server or an error occurred while fetching data.</p>
+        <div className="absolute inset-0 flex items-center justify-center bg-[#232939] bg-opacity-50 z-10">
+          <div className="bg-[#e75f77] bg-opacity-20 rounded-lg p-3 max-w-xs text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 text-[#e75f77] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p className="text-white text-sm font-medium">{error}</p>
+            <p className="text-gray-200 text-xs mt-1">Unable to connect to API server or an error occurred while fetching data.</p>
+          </div>
         </div>
       )}
       
       <div 
         ref={chartContainerRef} 
         className={`w-full flex-1 relative ${(loading || error) ? 'opacity-40' : ''}`}
-        style={{ cursor: 'default' }}
+        style={{ minHeight: '250px' }}
       />
     </div>
   );
