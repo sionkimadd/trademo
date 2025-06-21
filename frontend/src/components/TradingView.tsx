@@ -26,11 +26,11 @@ export default function TradingView({
     isPriceUpdating
 }: TradingViewProps) {
     return (
-        <div className="w-full md:w-3/4 h-full flex flex-col overflow-hidden">
-            <div className="card bg-[#141824] border-none rounded-xl flex-1 overflow-hidden">
-                <div className="card-body p-4 flex flex-col h-full">
-                    <div className="bg-[#232939] rounded-lg p-3 flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-4">
-                        <div className="w-full md:flex-1">
+        <div className="w-full md:w-3/4 h-full flex flex-col">
+            <div className="card bg-[#141824] border-none rounded-xl flex-1">
+                <div className="card-body p-2 md:p-4 flex flex-col gap-2">
+                    <div className="bg-[#232939] rounded-lg p-2 md:p-3 flex flex-col gap-2">
+                        <div className="w-full">
                             <StockSearch 
                                 stockData={stockData}
                                 stockLoading={stockLoading}
@@ -42,7 +42,7 @@ export default function TradingView({
                         </div>
                         
                         {stockData && (
-                            <div className="w-full md:flex-initial mt-2 md:mt-0">
+                            <div className="w-full">
                                 <OrderPanel 
                                     stockData={stockData}
                                     orderLoading={orderLoading}
@@ -54,13 +54,11 @@ export default function TradingView({
                         )}
                     </div>
                     
-                    <div className="flex flex-col flex-1 mt-2">
+                    <div className="bg-[#232939] rounded-xl p-2 md:p-3 flex-1 min-h-[300px] md:min-h-[500px]">
                         {stockData ? (
-                            <div className="bg-[#232939] rounded-xl p-3 mb-3 h-[500px]">
-                                <CandlestickChart 
-                                    symbol={stockData.symbol}
-                                />
-                            </div>
+                            <CandlestickChart 
+                                symbol={stockData.symbol}
+                            />
                         ) : (
                             <EmptyChartPlaceholder />
                         )}
