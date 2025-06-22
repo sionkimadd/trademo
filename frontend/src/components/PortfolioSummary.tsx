@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { formatCurrency, getReturnRateColor, formatPercent } from '../utils/formatters';
+import { THEME } from '../constants/colors';
 
 interface SummaryItemProps {
     label: string;
@@ -34,8 +35,8 @@ export default function PortfolioSummary({
     pricesLoading
 }: PortfolioSummaryProps) {
     return (
-        <div className="bg-[#141824] rounded-xl p-4 mb-3">
-            <div className="w-full text-sm p-3 bg-[#232939] rounded-lg">
+        <div className={`${THEME.background.primary.class} rounded-xl p-4 mb-3`}>
+            <div className={`w-full text-sm p-3 ${THEME.background.secondary.class} rounded-lg`}>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                     <SummaryItem 
                         label="Available cash"

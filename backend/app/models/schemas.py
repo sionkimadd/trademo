@@ -1,22 +1,23 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Dict, Any
+from datetime import datetime
 
 class StockData(BaseModel):
     symbol: str
     name: str
-    price: float
+    price: float = Field(..., ge=0)
     change: float
     change_percent: float
-    
+
 class Portfolio(BaseModel):
-    cash: float = 100000.0
-    stocks: Dict[str, Dict[str, Any]] = {}
-    total_profit_loss: float = 0.0
-    roi: float = 0.0
-    last_updated: str = ""
-    
+    cash: float = Field(default=100000.0, ge=0)
+    stocks: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+    total_profit_loss: float = Field(default=0.0)
+    roi: float = Field(default=0.0)
+    last_updated: str = Field(default_factory=lambda: datetime.now().isoformat())
+
 class Order(BaseModel):
     symbol: str
-    quantity: int
-    price: float
-    order_type: str = "market"
+    quantity: int = Field(..., ne=0)
+    price: float = Field(0.0, ge=0)
+    order_type: str = Field("market", pattern="^(market|limit)$")
