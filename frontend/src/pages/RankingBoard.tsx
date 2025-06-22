@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { THEME } from '../constants/colors';
 
 interface UserRanking {
   userId: string;
@@ -66,7 +67,7 @@ export default function RankingBoard() {
   }
 
   return (
-    <div className="bg-[#0e101a] min-h-screen">
+    <div className={`${THEME.background.darker.class} min-h-screen`}>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-8 text-white">Trade Ranking</h1>
         <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
@@ -83,7 +84,7 @@ export default function RankingBoard() {
                 <tr key={ranking.userId}>
                   <th>{index + 1}</th>
                   <td>{ranking.username}</td>
-                  <td className={ranking.totalPnL >= 0 ? 'text-green-600' : 'text-red-600'}>
+                  <td className={ranking.totalPnL >= 0 ? 'text-green-500' : 'text-red-500'}>
                     ${ranking.totalPnL.toFixed(2)}
                   </td>
                 </tr>

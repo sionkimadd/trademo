@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { TimeframeButtonProps } from '../types/chart';
+import { THEME } from '../constants/colors';
 
 const TimeframeButton = ({ 
   tf, 
@@ -17,8 +18,8 @@ const TimeframeButton = ({
       <button
         className={`btn btn-xs h-6 px-2 text-xs border-none rounded-md transition-colors ${
           isActive
-            ? 'bg-[#4db6ac] text-white hover:bg-[#3da59b]'
-            : 'bg-[#374151] text-gray-300 hover:bg-[#4b5563]'
+            ? THEME.action.buy.class + ' text-white'
+            : `bg-[${THEME.chart.grid}] text-gray-300 hover:bg-[${THEME.chart.border}]`
         }`}
         onClick={() => onClick(tf)}
         onMouseEnter={() => setShowTooltip(true)}
@@ -29,7 +30,7 @@ const TimeframeButton = ({
       
       {showTooltip && (
         <div className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 z-[9999]">
-          <div className="bg-[#1f2937] text-white text-xs rounded-md p-2 shadow-lg border border-gray-600 whitespace-nowrap relative">
+          <div className={`bg-[${THEME.background.tooltip.hex}] text-white text-xs rounded-md p-2 shadow-lg border border-gray-600 whitespace-nowrap relative`}>
             <div className="font-bold mb-1">{label} Chart</div>
             <div className="text-gray-300">
               <div>Update Cycle: {cycleInfo}</div>

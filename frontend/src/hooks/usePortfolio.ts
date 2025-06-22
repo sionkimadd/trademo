@@ -4,37 +4,14 @@ import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { API_PATHS, API_BASE_URL } from '../types/api';
 import { scheduleMinuteInterval } from '../utils/scheduleUtils';
+import {
+    Portfolio,
+    MarketStockData,
+    DetailedStockInfo,
+    UsePortfolioReturn
+} from '../types/portfolio';
 
-interface StockInPortfolio {
-    symbol: string;
-    quantity: number;
-    avg_price: number;
-}
-
-export interface Portfolio {
-    cash: number;
-    stocks: Record<string, StockInPortfolio>;
-    total_profit_loss?: number;
-    roi?: number;
-}
-
-interface MarketStockData {
-    symbol: string;
-    name?: string;
-    price: number;
-    change?: number;
-    change_percent?: number;
-}
-
-export interface DetailedStockInfo extends StockInPortfolio {
-    current_price: number;
-    market_value: number;
-    profit_loss: number;
-    roi: number;
-    name?: string;
-}
-
-export function usePortfolio() {
+export function usePortfolio(): UsePortfolioReturn {
     const auth = getAuth();
     const user = auth.currentUser;
     const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
