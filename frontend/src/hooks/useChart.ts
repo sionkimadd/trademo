@@ -2,45 +2,29 @@ import { useRef, useEffect } from 'react';
 import { createChart, IChartApi, ISeriesApi, CandlestickSeries, HistogramSeries } from 'lightweight-charts';
 import { TimeFrame, CandlestickDataWithVolume } from '../types/chart';
 import { formatChartNumber, formatChartDate, prepareVolumeData } from '../utils/formatters';
+import { THEME } from '../constants/colors';
 
 export interface ChartHookResult {
   chartContainerRef: React.RefObject<HTMLDivElement | null>;
 }
 
-const CHART_COLORS = {
-  background: '#232939',
-  text: '#d1d5db',
-  grid: '#374151',
-  border: '#4b5563',
-  crosshair: '#758CA3',
-  up: '#4db6ac',
-  down: '#e75f77',
-  volume: '#374151',
-  tooltip: {
-    bg: '#1f2937',
-    border: '#374151',
-    label: '#9ca3af',
-    value: '#d1d5db'
-  }
-};
-
 const CHART_OPTIONS = {
   layout: {
-    background: { color: CHART_COLORS.background },
-    textColor: CHART_COLORS.text,
+    background: { color: THEME.background.secondary.hex },
+    textColor: THEME.text.primary.hex,
   },
   grid: {
-    vertLines: { color: CHART_COLORS.grid },
-    horzLines: { color: CHART_COLORS.grid },
+    vertLines: { color: THEME.chart.grid },
+    horzLines: { color: THEME.chart.grid },
   },
   crosshair: {
     mode: 1,
   },
   rightPriceScale: {
-    borderColor: CHART_COLORS.border,
+    borderColor: THEME.chart.border,
   },
   timeScale: {
-    borderColor: CHART_COLORS.border,
+    borderColor: THEME.chart.border,
   },
 };
 
@@ -52,9 +36,9 @@ const TOOLTIP_STYLES = {
   padding: '8px',
   boxSizing: 'border-box',
   fontSize: '12px',
-  color: CHART_COLORS.text,
-  backgroundColor: CHART_COLORS.tooltip.bg,
-  border: `1px solid ${CHART_COLORS.tooltip.border}`,
+  color: THEME.text.primary.hex,
+  backgroundColor: THEME.background.tooltip.hex,
+  border: `1px solid ${THEME.chart.border}`,
   borderRadius: '4px',
   pointerEvents: 'none',
   fontFamily: 'monospace',
@@ -71,11 +55,11 @@ function createTooltipElement(container: HTMLDivElement): HTMLDivElement {
 function createTooltipContent(data: CandlestickDataWithVolume, dateStr: string, volume?: number): string {
   return `
     <div style="margin-bottom: 4px; font-weight: bold;">${dateStr}</div>
-    <div style="color: ${CHART_COLORS.tooltip.label};">O: <span style="color: ${CHART_COLORS.tooltip.value};">$${formatChartNumber(data.open)}</span></div>
-    <div style="color: ${CHART_COLORS.tooltip.label};">H: <span style="color: ${CHART_COLORS.tooltip.value};">$${formatChartNumber(data.high)}</span></div>
-    <div style="color: ${CHART_COLORS.tooltip.label};">L: <span style="color: ${CHART_COLORS.tooltip.value};">$${formatChartNumber(data.low)}</span></div>
-    <div style="color: ${CHART_COLORS.tooltip.label};">C: <span style="color: ${CHART_COLORS.tooltip.value};">$${formatChartNumber(data.close)}</span></div>
-    ${volume ? `<div style="color: ${CHART_COLORS.tooltip.label};">V: <span style="color: ${CHART_COLORS.tooltip.value};">${formatChartNumber(volume)}</span></div>` : ''}
+    <div style="color: ${THEME.text.secondary.hex};">O: <span style="color: ${THEME.text.primary.hex};">$${formatChartNumber(data.open)}</span></div>
+    <div style="color: ${THEME.text.secondary.hex};">H: <span style="color: ${THEME.text.primary.hex};">$${formatChartNumber(data.high)}</span></div>
+    <div style="color: ${THEME.text.secondary.hex};">L: <span style="color: ${THEME.text.primary.hex};">$${formatChartNumber(data.low)}</span></div>
+    <div style="color: ${THEME.text.secondary.hex};">C: <span style="color: ${THEME.text.primary.hex};">$${formatChartNumber(data.close)}</span></div>
+    ${volume ? `<div style="color: ${THEME.text.secondary.hex};">V: <span style="color: ${THEME.text.primary.hex};">${formatChartNumber(volume)}</span></div>` : ''}
   `;
 }
 
@@ -154,28 +138,28 @@ export function useChart(data: CandlestickDataWithVolume[], timeFrame: TimeFrame
         mode: 1,
         vertLine: {
           width: 1,
-          color: CHART_COLORS.crosshair,
+          color: THEME.chart.crosshair,
           style: 2,
         },
         horzLine: {
           width: 1,
-          color: CHART_COLORS.crosshair,
+          color: THEME.chart.crosshair,
           style: 2,
         },
       },
     });
 
     const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: CHART_COLORS.up,
-      downColor: CHART_COLORS.down,
+      upColor: THEME.action.buy.hex,
+      downColor: THEME.action.sell.hex,
       borderVisible: false,
-      wickUpColor: CHART_COLORS.up,
-      wickDownColor: CHART_COLORS.down,
+      wickUpColor: THEME.action.buy.hex,
+      wickDownColor: THEME.action.sell.hex,
       priceScaleId: 'right',
     });
 
     const volumeSeries = chart.addSeries(HistogramSeries, {
-      color: CHART_COLORS.volume,
+      color: THEME.chart.grid,
       priceFormat: { type: 'volume' },
       priceScaleId: 'volume',
     });

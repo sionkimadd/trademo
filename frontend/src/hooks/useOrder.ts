@@ -16,7 +16,9 @@ export function useOrder() {
         
         try {
             const user = auth.currentUser;
-            if (!user) throw new Error('Login required');
+            if (!user) {
+                throw new Error('Login is required');
+            }
             
             const token = await user.getIdToken(true);
             
@@ -36,14 +38,33 @@ export function useOrder() {
                 body: JSON.stringify(orderData)
             });
             
+            if (response.status === 401) {
+                const newToken = await user.getIdToken(true);
+                const retryResponse = await fetch(`${API_BASE_URL}${API_PATHS.ORDER}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${newToken}`
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                if (!retryResponse.ok) {
+                    const errorData = await retryResponse.json().catch(() => ({ detail: 'An error occurred while processing the order' }));
+                    throw new Error(errorData.detail || 'Order processing failed');
+                }
+                
+                return true;
+            }
+            
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ detail: 'Response format error' }));
-                throw new Error(errorData.detail || 'Error occurred during order processing');
+                const errorData = await response.json().catch(() => ({ detail: 'An error occurred while processing the order' }));
+                throw new Error(errorData.detail || 'Order processing failed');
             }
             
             return true;
         } catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Error occurred during order processing';
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred while processing the order';
             setError(errorMessage);
             return false;
         } finally {

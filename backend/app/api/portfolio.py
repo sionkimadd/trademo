@@ -1,14 +1,18 @@
 from fastapi import APIRouter, Depends, HTTPException
+from typing import Dict, Any
 from ..core.auth import verify_token
 from ..models.schemas import Portfolio
 from ..db.firebase import db
 
 router = APIRouter()
 
-@router.get("")
-async def get_portfolio(user_data: dict = Depends(verify_token)):
+@router.get("", response_model=Portfolio)
+async def get_portfolio(user_data: Dict[str, Any] = Depends(verify_token)) -> Dict[str, Any]:
     if not db:
-        raise HTTPException(status_code=500, detail="Firebase connection unavailable")
+        raise HTTPException(
+            status_code=500, 
+            detail="Firebase connection unavailable"
+        )
     
     user_id = user_data["uid"]
     
@@ -23,4 +27,7 @@ async def get_portfolio(user_data: dict = Depends(verify_token)):
         
         return portfolio_doc.to_dict()
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Portfolio query error: {str(e)}") 
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Portfolio query error: {str(e)}"
+        ) 

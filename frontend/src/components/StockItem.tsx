@@ -1,5 +1,7 @@
-import { DetailedStockInfo } from '../hooks/usePortfolio';
+import { DetailedStockInfo } from '../types/portfolio';
 import { formatCurrency, getReturnRateColor, formatPercent } from '../utils/formatters';
+import { THEME } from '../constants/colors';
+import { Button } from './common';
 
 interface StockItemProps {
     stock: DetailedStockInfo;
@@ -28,19 +30,18 @@ export default function StockItem({ stock, onOrder, orderLoading }: StockItemPro
     };
 
     const OrderButton = ({ isBuy }: { isBuy: boolean }) => (
-        <button 
-            className={`btn btn-xs h-7 border-none text-white rounded-md px-1 text-xs ${
-                isBuy ? 'bg-[#4db6ac] hover:bg-[#3da59b]' : 'bg-[#e75f77] hover:bg-[#d94c65]'
-            }`}
+        <Button
+            variant={isBuy ? 'buy' : 'sell'}
+            size="xs"
             onClick={() => handleOrder(isBuy)}
-            disabled={orderLoading}
+            loading={orderLoading}
         >
             {isBuy ? 'Buy' : 'Sell'}
-        </button>
+        </Button>
     );
 
     return (
-        <div className="bg-[#232939] border-none rounded-lg p-3 mb-2 text-xs">
+        <div className={`${THEME.background.secondary.class} border-none rounded-lg p-3 mb-2 text-xs`}>
             <div className="flex justify-between items-center mb-1">
                 <span className="text-sm font-medium text-gray-100 truncate" title={stock.name || stock.symbol}>
                     {stock.symbol} {stock.name && <span className="text-gray-400">({stock.name})</span>}
@@ -72,7 +73,7 @@ export default function StockItem({ stock, onOrder, orderLoading }: StockItemPro
                     type="number" 
                     min="1" 
                     defaultValue="1" 
-                    className="input input-xs bg-[#141824] text-gray-100 border-none w-14 h-7 rounded-md mr-2 text-xs" 
+                    className={`input input-xs ${THEME.background.primary.class} text-gray-100 border-none w-14 h-7 rounded-md mr-2 text-xs`} 
                     id={`qty-${stock.symbol}`}
                 />
                 <div className="grid grid-cols-2 gap-2 flex-1">

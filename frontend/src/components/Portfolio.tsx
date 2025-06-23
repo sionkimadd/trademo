@@ -1,6 +1,7 @@
 import PortfolioSummary from './PortfolioSummary';
 import StockItem from './StockItem';
-import { DetailedStockInfo, Portfolio as PortfolioDataFromHook } from '../hooks/usePortfolio';
+import { DetailedStockInfo, Portfolio as PortfolioDataFromHook } from '../types/portfolio';
+import { THEME } from '../constants/colors';
 
 interface PortfolioProps {
     portfolio: PortfolioDataFromHook | null;
@@ -36,16 +37,16 @@ export default function Portfolio({
                 pricesLoading={pricesLoading}
             />
 
-            <div className="flex-1 flex flex-col overflow-hidden bg-[#141824] rounded-xl p-4">
+            <div className={`flex-1 flex flex-col overflow-hidden ${THEME.background.primary.class} rounded-xl p-4`}>
                 <div className="flex justify-between items-center mb-2">
                     <h3 className="text-md font-semibold text-gray-200">Holdings</h3>
-                    {pricesLoading && <span className="loading loading-spinner loading-xs text-[#4db6ac]"></span>}
+                    {pricesLoading && <span className={`loading loading-spinner loading-xs ${THEME.text.buy.class}`}></span>}
                 </div>
                 
                 <div className="overflow-y-auto flex-1">
                     {detailedStocks.length === 0 && !pricesLoading && (
-                        <div className="alert bg-[#4db6ac] bg-opacity-10 border-none p-1 text-sm rounded-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-[#4db6ac] shrink-0 w-4 h-4">
+                        <div className={`alert ${THEME.action.buy.class} bg-opacity-10 border-none p-1 text-sm rounded-xl`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className={`stroke-[${THEME.action.buy.hex}] shrink-0 w-4 h-4`}>
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <span className="text-gray-200">No stocks in portfolio. Search and buy stocks to get started.</span>

@@ -3,6 +3,7 @@ import { CandlestickChartProps, TimeFrame } from '../types/chart';
 import { useChartData, TIMEFRAME_CONFIG } from '../hooks/useChartData';
 import { useChart } from '../hooks/useChart';
 import TimeframeButton from './TimeframeButton';
+import { THEME } from '../constants/colors';
 
 const TIMEFRAME_OPTIONS: Array<{
   tf: TimeFrame;
@@ -78,18 +79,18 @@ export default function CandlestickChart({
       </div>
       
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#232939] bg-opacity-50 z-10">
+        <div className={`absolute inset-0 flex items-center justify-center ${THEME.background.secondary.class} bg-opacity-50 z-10`}>
           <div className="flex flex-col items-center">
-            <span className="loading loading-spinner loading-md text-[#4db6ac]"></span>
+            <span className={`loading loading-spinner loading-md ${THEME.text.buy.class}`}></span>
             <p className="text-sm text-gray-300 mt-2">Loading chart data...</p>
           </div>
         </div>
       )}
       
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#232939] bg-opacity-50 z-10">
-          <div className="bg-[#e75f77] bg-opacity-20 rounded-lg p-3 max-w-xs text-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 text-[#e75f77] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className={`absolute inset-0 flex items-center justify-center ${THEME.background.secondary.class} bg-opacity-50 z-10`}>
+          <div className={`${THEME.action.sell.class} bg-opacity-20 rounded-lg p-3 max-w-xs text-center`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className={`mx-auto h-8 w-8 ${THEME.text.sell.class} mb-2`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <p className="text-white text-sm font-medium">{error}</p>

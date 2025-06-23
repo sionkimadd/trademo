@@ -5,25 +5,59 @@ import Home from '../pages/Home'
 import Layout from '../components/Layout'
 import RankingBoard from '../pages/RankingBoard'
 
+interface RouteConfig {
+    path: string;
+    element: React.ReactNode;
+    requiresAuth?: boolean;
+    withLayout?: boolean;
+}
+
+const routeConfigs: RouteConfig[] = [
+    {
+        path: '/login',
+        element: <GoogleLogin />,
+        requiresAuth: false,
+        withLayout: false,
+    },
+    {
+        path: '/',
+        element: <Home />,
+        requiresAuth: true,
+        withLayout: true,
+    },
+    {
+        path: '/ranking',
+        element: <RankingBoard />,
+        requiresAuth: true,
+        withLayout: true,
+    },
+];
+
+const renderRoute = (config: RouteConfig) => {
+    let element = config.element;
+    
+    if (config.withLayout) {
+        element = <Layout>{element}</Layout>;
+    }
+    
+    if (config.requiresAuth) {
+        element = <AuthRoute>{element}</AuthRoute>;
+    }
+    
+    return element;
+};
+
 export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/login" element={<GoogleLogin />} />
-                <Route path="/" element={
-                    <AuthRoute>
-                        <Layout>
-                            <Home />
-                        </Layout>
-                    </AuthRoute>
-                } />
-                <Route path="/ranking" element={
-                    <AuthRoute>
-                        <Layout>
-                            <RankingBoard />
-                        </Layout>
-                    </AuthRoute>
-                } />
+                {routeConfigs.map((config) => (
+                    <Route
+                        key={config.path}
+                        path={config.path}
+                        element={renderRoute(config)}
+                    />
+                ))}
             </Routes>
         </BrowserRouter>
     )
