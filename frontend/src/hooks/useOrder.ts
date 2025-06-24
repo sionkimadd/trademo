@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth';
 import { API_PATHS, API_BASE_URL } from '../types/api';
 import { useErrorContext } from '../contexts/ErrorContext';
 
-export function useOrder() {
+export const useOrder = () => {
     const auth = getAuth();
     const { setError } = useErrorContext();
     const [orderLoading, setOrderLoading] = useState(false);
@@ -73,4 +73,4 @@ export function useOrder() {
     };
 
     return { orderLoading, handleOrder };
-} 
+}; 

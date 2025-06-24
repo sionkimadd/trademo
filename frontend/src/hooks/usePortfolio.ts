@@ -11,7 +11,7 @@ import {
     UsePortfolioReturn
 } from '../types/portfolio';
 
-export function usePortfolio(): UsePortfolioReturn {
+export const usePortfolio = (): UsePortfolioReturn => {
     const auth = getAuth();
     const user = auth.currentUser;
     const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
@@ -244,4 +244,4 @@ export function usePortfolio(): UsePortfolioReturn {
         totalProfitLoss: portfolioMarketStats.totalProfitLoss,
         roi: portfolioMarketStats.roi,
     };
-} 
+}; 

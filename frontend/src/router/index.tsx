@@ -4,6 +4,7 @@ import AuthRoute from '../guards/AuthRoute'
 import Home from '../pages/Home'
 import Layout from '../components/Layout'
 import RankingBoard from '../pages/RankingBoard'
+import News from '../pages/News'
 
 interface RouteConfig {
     path: string;
@@ -28,6 +29,12 @@ const routeConfigs: RouteConfig[] = [
     {
         path: '/ranking',
         element: <RankingBoard />,
+        requiresAuth: true,
+        withLayout: true,
+    },
+    {
+        path: '/news',
+        element: <News />,
         requiresAuth: true,
         withLayout: true,
     },
