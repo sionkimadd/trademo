@@ -4,10 +4,10 @@ import { API_PATHS, API_BASE_URL } from '../types/api';
 import { StockData } from '../types/stock';
 import { scheduleMinuteInterval } from '../utils/scheduleUtils';
 
-export function useStockPrice(
+export const useStockPrice = (
     stockData: StockData | null, 
     setStockData: (data: StockData | null) => void
-) {
+) => {
     const auth = getAuth();
     const user = auth.currentUser;
     
@@ -74,4 +74,4 @@ export function useStockPrice(
     };
     
     return { isPriceUpdating };
-}
+};

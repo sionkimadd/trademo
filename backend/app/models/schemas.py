@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Dict, Any
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 class StockData(BaseModel):
@@ -21,3 +21,15 @@ class Order(BaseModel):
     quantity: int = Field(..., ne=0)
     price: float = Field(0.0, ge=0)
     order_type: str = Field("market", pattern="^(market|limit)$")
+
+class NewsItem(BaseModel):
+    title: str
+    date: str
+    description: Optional[str] = None
+    media: str
+    link: str
+
+class NewsResponse(BaseModel):
+    keyword: str
+    results: List[NewsItem]
+    count: int

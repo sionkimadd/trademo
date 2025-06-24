@@ -86,7 +86,7 @@ function calculateTooltipPosition(
   return { left, top };
 }
 
-export function useChart(data: CandlestickDataWithVolume[], timeFrame: TimeFrame): ChartHookResult {
+export const useChart = (data: CandlestickDataWithVolume[], timeFrame: TimeFrame): ChartHookResult => {
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const candlestickSeriesRef = useRef<ISeriesApi<'Candlestick'> | null>(null);
@@ -246,4 +246,4 @@ export function useChart(data: CandlestickDataWithVolume[], timeFrame: TimeFrame
   }, [data]);
 
   return { chartContainerRef };
-}
+};

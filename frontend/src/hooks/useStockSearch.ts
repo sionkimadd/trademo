@@ -4,7 +4,7 @@ import { API_PATHS, API_BASE_URL } from '../types/api';
 import { StockData } from '../types/stock';
 import { useErrorContext } from '../contexts/ErrorContext';
 
-export function useStockSearch() {
+export const useStockSearch = () => {
     const auth = getAuth();
     const { setError } = useErrorContext();
     const [searchQuery, setSearchQuery] = useState('');
@@ -57,4 +57,4 @@ export function useStockSearch() {
         setStockData,
         handleSearch
     };
-} 
+}; 

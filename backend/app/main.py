@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .api import stocks, charts, portfolio, orders
+from .api import stocks, charts, portfolio, orders, news
 
 app = FastAPI(
     title="TradeMo API",
-    version="1.0"
+    version="1.1"
 )
 
 ALLOWED_ORIGINS = [
@@ -33,3 +33,4 @@ app.include_router(stocks.router, prefix="/stock", tags=["stocks"])
 app.include_router(charts.router, prefix="/chart", tags=["charts"])
 app.include_router(portfolio.router, prefix="/portfolio", tags=["portfolio"])
 app.include_router(orders.router, prefix="/order", tags=["orders"])
+app.include_router(news.router, prefix="/news", tags=["news"])

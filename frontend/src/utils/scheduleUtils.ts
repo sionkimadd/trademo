@@ -1,7 +1,7 @@
-export function scheduleMinuteInterval(
+export const scheduleMinuteInterval = (
     callback: () => void,
     onCleanup?: (timeoutId: ReturnType<typeof setTimeout> | null, intervalId: ReturnType<typeof setInterval> | null) => void
-): () => void {
+): (() => void) => {
     let timeoutId: ReturnType<typeof setTimeout> | null = null;
     let intervalId: ReturnType<typeof setInterval> | null = null;
 
@@ -21,4 +21,4 @@ export function scheduleMinuteInterval(
         if (intervalId) clearInterval(intervalId);
         if (onCleanup) onCleanup(timeoutId, intervalId);
     };
-} 
+}; 

@@ -125,7 +125,7 @@ export interface ChartDataHookResult {
   refreshIntervalRef: React.MutableRefObject<ReturnType<typeof setTimeout> | ReturnType<typeof setInterval> | null>;
 }
 
-export function useChartData(symbol: string, initialData: CandlestickDataWithVolume[] = []): ChartDataHookResult {
+export const useChartData = (symbol: string, initialData: CandlestickDataWithVolume[] = []): ChartDataHookResult => {
   const [data, setData] = useState<CandlestickDataWithVolume[]>(initialData);
   const [timeFrame, setTimeFrame] = useState<TimeFrame>('1m');
   const [loading, setLoading] = useState<boolean>(false);
@@ -290,4 +290,4 @@ export function useChartData(symbol: string, initialData: CandlestickDataWithVol
     scheduleNextUpdate,
     refreshIntervalRef
   };
-} 
+}; 

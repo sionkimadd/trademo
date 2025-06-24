@@ -89,7 +89,7 @@ export default function GoogleLogin() {
         </button>
         
         <p className="text-red-500 text-sm mt-8 text-center">
-          Version 1.0
+          Version 1.1
         </p>
       </div>
     </div>

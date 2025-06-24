@@ -85,8 +85,9 @@ export default function Layout({ children }: LayoutProps) {
                             className={`menu menu-sm dropdown-content ${THEME.background.dropdown.class} rounded-box z-50 mt-3 w-52 p-2 shadow text-gray-200`}
                         >
                             <li><span className="justify-between">{displayName}</span></li>
-                            <li><a href="/" data-discover="true">Home</a></li>
+                            <li><a href="/" data-discover="true">Trading</a></li>
                             <li><a href="/ranking" data-discover="true">Ranking</a></li>
+                            <li><a href="/news" data-discover="true">News</a></li>
                             <li className="divider my-1 before:bg-gray-700 after:bg-gray-700" />
                             <li>
                                 <a 
